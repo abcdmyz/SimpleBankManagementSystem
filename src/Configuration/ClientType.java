@@ -2,20 +2,22 @@ package Configuration;
 
 public enum ClientType 
 {
-	ordinary, vip, enterprise;
+	ordinary("ordinary"), vip("vip"), enterprise("enterprise");
 	
-	public static ClientType getClientType( String type )
+	private String typeName;
+	
+	private ClientType( String typeName )
 	{
-		if ( type.equals("ordinary") )
-			return ClientType.ordinary;
-		
-		if ( type.equals("vip") )
-			return ClientType.vip;
-		
-		if ( type.equals("enterprise") )
-			return ClientType.enterprise;
+		this.typeName = typeName;
+	}
+	
+	public static ClientType getEnumFromString( String typeName )
+	{
+		if ( typeName != null )
+		{
+			return Enum.valueOf(ClientType.class, typeName);
+		}
 		
 		return null;
 	}
-	
 }

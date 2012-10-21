@@ -9,7 +9,7 @@ public class JDBCConnection
 {
 	static private String jdbc_driver = "com.mysql.jdbc.Driver";
 
-	static private String mysql_url = "jdbc:mysql://127.0.0.1:3306/test";
+	static private String mysql_url = "jdbc:mysql://127.0.0.1:3306/bank";
 	static private String mysql_user = "root";
 	static private String mysql_password = "7673";
 	static private int connectionCount;
@@ -36,6 +36,7 @@ public class JDBCConnection
 		{
 			Class.forName(jdbc_driver);
 			connection = DriverManager.getConnection(mysql_url, mysql_user, mysql_password);
+			connection.setAutoCommit(false);
 		}
 		catch( SQLException e )
 		{

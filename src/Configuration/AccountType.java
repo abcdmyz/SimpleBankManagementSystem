@@ -2,16 +2,24 @@ package Configuration;
 
 public enum AccountType 
 {	
-	fixed_deposit, current_deposit;
+	fixed_deposit("fixed"), current_deposit("current");
 	
-	public static AccountType getAccountType( String type )
+	private String typeName;
+	
+	private AccountType( String tyepName )
 	{
-		if ( type.equals("fix") )
-			return AccountType.fixed_deposit;
-		
-		if ( type.equals("current") )
-			return AccountType.current_deposit;
+		this.typeName = typeName;
+	}
+	
+	public static AccountType getEnumFromString( String typeName )
+	{
+		if ( typeName != null )
+		{
+			return Enum.valueOf(AccountType.class, typeName);
+		}
 		
 		return null;
 	}
+	
+
 }
