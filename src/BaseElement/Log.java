@@ -1,5 +1,7 @@
 package BaseElement;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import Configuration.OperationType;
@@ -87,6 +89,7 @@ public class Log
 	public Date getLogTime() {
 		return logTime;
 	}
+
 	
 	
 }

@@ -10,7 +10,7 @@ import Configuration.ClientType;
 import DatabaseOperation.TbAccountOperation;
 import DatabaseOperation.JDBCConnection;
 
-public class AccountDatabaseTest 
+public class TbAccountTest 
 {
 	public static void createAccountTest() throws ClassNotFoundException, SQLException
 	{

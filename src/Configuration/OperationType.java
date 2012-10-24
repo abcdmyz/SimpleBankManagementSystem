@@ -3,7 +3,7 @@ package Configuration;
 public enum OperationType 
 {
 	create("create"), deposit("deposit"), withdraw("withdraw"), check("check"), 
-	transfer("transfer"), chpassword("chpasswd"), cancel("cancel");
+	transfer("transfer"), chpassword("chpassword"), cancel("cancel");
 	
 	private String typeName;
 	
