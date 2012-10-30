@@ -1,4 +1,4 @@
-package Test;
+package test.dboperation;
 
 
 import java.sql.Connection;
@@ -9,10 +9,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import BaseElement.Log;
-import Configuration.OperationType;
-import DatabaseOperation.JDBCConnection;
-import DatabaseOperation.TbLogOperation;
+import system.element.definition.Log;
+
+import database.connection.JDBCConnection;
+import database.operation.TbLogOperation;
+import enumtype.OperationType;
+
+
 
 public class TbLogTest 
 {

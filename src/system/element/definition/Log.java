@@ -1,10 +1,11 @@
-package BaseElement;
+package system.element.definition;
 
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import Configuration.OperationType;
+import enumtype.OperationType;
+
 
 public class Log 
 {

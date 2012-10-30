@@ -1,4 +1,4 @@
-package DatabaseOperation;
+package database.operation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 
-import BaseElement.Account;
-import BaseElement.Log;
-import Configuration.AccountType;
-import Configuration.ClientType;
-import Configuration.OperationType;
+import enumtype.AccountType;
+import enumtype.ClientType;
+import enumtype.OperationType;
+
+import system.element.definition.Account;
+import system.element.definition.Log;
+
+
 
 public class TbLogOperation 
 {

@@ -1,4 +1,4 @@
-package Configuration;
+package enumtype;
 
 public enum Position 
 {

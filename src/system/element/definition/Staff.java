@@ -1,6 +1,6 @@
-package BaseElement;
+package system.element.definition;
 
-import Configuration.Position;
+import enumtype.Position;
 
 public class Staff 
 {

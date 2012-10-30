@@ -1,18 +1,62 @@
-package DatabaseOperation;
+package database.operation;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.HashSet;
 
-import BaseElement.Account;
-import Configuration.AccountType;
-import Configuration.ClientType;
+import enumtype.AccountType;
+import enumtype.ClientType;
+import exception.dboperation.AccountDBOperationException;
+
+import system.element.definition.Account;
+
+
 
 public class TbAccountOperation 
 {
-	public static void createAccount( Connection connection, Account account )
+	public static HashSet<String> loadAccountID( Connection connection ) throws AccountDBOperationException
+	{
+		HashSet<String> accountSet = new HashSet<String>();
+		accountSet.clear();
+		
+		PreparedStatement pstmt;
+		ResultSet resultset;	
+		String accountID;
+
+		try
+		{	
+			pstmt = connection.prepareStatement ("SELECT * FROM account;");
+			
+			connection.setAutoCommit(false);
+			resultset = pstmt.executeQuery();
+
+			while ( resultset.next() )
+			{
+				accountID = resultset.getString("account_id");
+				accountSet.add(accountID);
+			}
+			
+			pstmt.close();
+			resultset.close();
+			connection.commit();
+		}
+
+		catch (SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+			
+			throw new AccountDBOperationException("Load AccountID Fail");		
+		}
+		
+		return accountSet;
+		
+	}
+	
+	public static void createAccount( Connection connection, Account account ) throws AccountDBOperationException
 	{
 		
 		try
@@ -39,11 +83,13 @@ public class TbAccountOperation
 		catch (SQLException ex)
 		{
 			System.err.println(ex.getMessage());
+			
+			throw new AccountDBOperationException("Create Account Fail");
 		}
 		
 	}
 	
-	public static void updateAccountBalance( Connection connection, String accountID, double balance )
+	public static void updateAccountBalance( Connection connection, String accountID, double balance ) throws AccountDBOperationException
 	{
 		PreparedStatement pstmt;
 
@@ -64,10 +110,12 @@ public class TbAccountOperation
 		catch (SQLException ex)
 		{
 			System.err.println(ex.getMessage());
+			
+			throw new AccountDBOperationException("Update Account Balance Fail");
 		}
 	}
 	
-	public static void updateAccountPassword( Connection connection, String accountID, String password )
+	public static void updateAccountPassword( Connection connection, String accountID, String password ) throws AccountDBOperationException
 	{
 		PreparedStatement pstmt;
 
@@ -88,10 +136,12 @@ public class TbAccountOperation
 		catch (SQLException ex)
 		{
 			System.err.println(ex.getMessage());
+			
+			throw new AccountDBOperationException("Update Account Password Fail");
 		}
 	}
 	
-	public static Account selectAccount( Connection connection, String accountID )
+	public static Account selectAccount( Connection connection, String accountID ) throws AccountDBOperationException
 	{
 		PreparedStatement pstmt;
 		ResultSet resultset;	
@@ -103,6 +153,8 @@ public class TbAccountOperation
 			pstmt = connection.prepareStatement ("SELECT * FROM account WHERE account_id = ? ;");
 
 			pstmt.setString(1, accountID);
+			
+			connection.setAutoCommit(false);
 			resultset = pstmt.executeQuery();
 
 			if ( resultset.next() )
@@ -123,7 +175,7 @@ public class TbAccountOperation
 				account.setOpenDate(resultset.getDate("open_date"));
 			}
 			
-			connection.setAutoCommit(false);
+			
 			pstmt.close();
 			resultset.close();
 			connection.commit();
@@ -132,12 +184,14 @@ public class TbAccountOperation
 		catch (SQLException ex)
 		{
 			System.err.println(ex.getMessage());
+			
+			throw new AccountDBOperationException("Select Account Fail");
 		}
 
 		return account;
 	}
 	
-	public static void deleteAccount( Connection connection, String accountID )
+	public static void deleteAccount( Connection connection, String accountID ) throws AccountDBOperationException
 	{
 		PreparedStatement pstmt;
 
@@ -157,10 +211,12 @@ public class TbAccountOperation
 		catch (SQLException ex)
 		{
 			System.err.println(ex.getMessage());
+			
+			throw new AccountDBOperationException("Delete Account Fail");
 		}
 	}
 	
-	public static void transferAccount( Connection connection, String accountID1, String accountID2, double balance)
+	public static void transferAccount( Connection connection, String accountID1, String accountID2, double balance) throws AccountDBOperationException
 	{
 		PreparedStatement pstmt1;
 		PreparedStatement pstmt2;
@@ -185,6 +241,8 @@ public class TbAccountOperation
 		catch (SQLException ex)
 		{
 			System.err.println(ex.getMessage());
+			
+			throw new AccountDBOperationException("Transfer Account Fail");
 		}
 	}
 	

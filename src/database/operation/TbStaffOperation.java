@@ -1,4 +1,4 @@
-package DatabaseOperation;
+package database.operation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,10 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import BaseElement.Log;
-import BaseElement.Staff;
-import Configuration.OperationType;
-import Configuration.Position;
+import enumtype.OperationType;
+import enumtype.Position;
+
+import system.element.definition.Log;
+import system.element.definition.Staff;
+
+
 
 public class TbStaffOperation 
 {

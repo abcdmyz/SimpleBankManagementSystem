@@ -1,9 +1,10 @@
-package BaseElement;
+package system.element.definition;
 
 import java.util.Date;
 
-import Configuration.AccountType;
-import Configuration.ClientType;
+import enumtype.AccountType;
+import enumtype.ClientType;
+
 
 public class Account 
 {
@@ -20,6 +21,12 @@ public class Account
 	public Account( String accountID, String clientID, String password )
 	{
 		this.accountID = accountID;
+		this.clientID = clientID;
+		this.password = password;
+	}
+	
+	public Account( String clientID, String password )
+	{
 		this.clientID = clientID;
 		this.password = password;
 	}

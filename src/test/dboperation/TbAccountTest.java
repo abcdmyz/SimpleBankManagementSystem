@@ -1,18 +1,22 @@
-package Test;
+package test.dboperation;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 
-import BaseElement.Account;
-import Configuration.AccountType;
-import Configuration.ClientType;
-import DatabaseOperation.TbAccountOperation;
-import DatabaseOperation.JDBCConnection;
+import system.element.definition.Account;
+
+import database.connection.JDBCConnection;
+import database.operation.TbAccountOperation;
+import enumtype.AccountType;
+import enumtype.ClientType;
+import exception.dboperation.AccountDBOperationException;
+
+
 
 public class TbAccountTest 
 {
-	public static void createAccountTest() throws ClassNotFoundException, SQLException
+	public static void createAccountTest() throws ClassNotFoundException, SQLException, AccountDBOperationException
 	{
 		Connection connection = JDBCConnection.getCommonConnection();
 		
@@ -69,7 +73,7 @@ public class TbAccountTest
 		JDBCConnection.closeConnection(connection);
 	}
 	
-	public static void selectAccountTest() throws ClassNotFoundException, SQLException
+	public static void selectAccountTest() throws ClassNotFoundException, SQLException, AccountDBOperationException
 	{
 		Connection connection = JDBCConnection.getCommonConnection();
 		
@@ -81,14 +85,19 @@ public class TbAccountTest
 		JDBCConnection.closeConnection(connection);
 	}
 	
-	public static void updateAccountTest() throws ClassNotFoundException, SQLException
+	public static void updateAccountTest() throws ClassNotFoundException, SQLException, AccountDBOperationException
 	{
 		Connection connection = JDBCConnection.getCommonConnection();
 		
 		Account account1 = new Account();
 	
 		TbAccountOperation.updateAccountBalance(connection, "A0001", 500);
-		TbAccountOperation.updateAccountPassword(connection, "A0001", "abcd");
+		try {
+			TbAccountOperation.updateAccountPassword(connection, "A0001", "abcd");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		account1 = TbAccountOperation.selectAccount(connection, "A0001");
 		
 		printAccount(account1);
@@ -96,7 +105,7 @@ public class TbAccountTest
 		JDBCConnection.closeConnection(connection);
 	}
 	
-	public static void transferAccountTest() throws ClassNotFoundException, SQLException
+	public static void transferAccountTest() throws ClassNotFoundException, SQLException, AccountDBOperationException
 	{
 		Connection connection = JDBCConnection.getCommonConnection();
 		
