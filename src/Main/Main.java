@@ -9,7 +9,9 @@ import system.element.manager.AccountManager;
 import test.dboperation.TbAccountTest;
 import test.dboperation.TbLogTest;
 import test.dboperation.TbStaffTest;
-import test.elementmanager.AccountManagerTest;
+import test.elementmanager.AccountEnterpriseManagerTest;
+import test.elementmanager.AccountOrdinaryManagerTest;
+import test.elementmanager.AccountVIPManagerTest;
 
 
 public class Main 
@@ -39,14 +41,19 @@ public class Main
 		//TbLogTest.selectLogsBySuperiorIDInTimeTest();
 		
 		/*
-		AccountManagerTest.createAccountTest();
+		AccountManagerTest.createAccountTest();	
+		AccountOrdinaryManagerTest.depositAccountTest();
+		AccountOrdinaryManagerTest.transferAccountTest();
+		AccountOrdinaryManagerTest.transferAccountTest();
 		*/
 		
-		/*
-		AccountManagerTest.depositAccountTest();
-		AccountManagerTest.withdrawAccountTest();
-		*/
+		//AccountVIPManagerTest.createAccountTest();
+		//AccountVIPManagerTest.depositAccountTest();
+		//AccountVIPManagerTest.withdrawAccountTest();
+		//AccountVIPManagerTest.transferAccountTest();
 		
-		AccountManagerTest.changePasswordTest();
+		//AccountEnterpriseManagerTest.depositAccountTest();
+		//AccountEnterpriseManagerTest.withdrawAccountTest();
+		AccountEnterpriseManagerTest.transferAccountTest();
 	}
 }

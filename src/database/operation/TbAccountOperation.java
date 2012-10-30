@@ -147,7 +147,7 @@ public class TbAccountOperation
 		ResultSet resultset;	
 
 		Account account = new Account();
-
+		
 		try
 		{	
 			pstmt = connection.prepareStatement ("SELECT * FROM account WHERE account_id = ? ;");
@@ -174,11 +174,19 @@ public class TbAccountOperation
 				account.setPassword(resultset.getString("password"));
 				account.setOpenDate(resultset.getDate("open_date"));
 			}
-			
+			else
+			{	
+				pstmt.close();
+				resultset.close();
+				connection.commit();
+				
+				throw new AccountDBOperationException("Account " + accountID + " Don't Exist");
+			}
 			
 			pstmt.close();
 			resultset.close();
 			connection.commit();
+			
 		}
 
 		catch (SQLException ex)
