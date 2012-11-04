@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import enumtype.OperationType;
 import enumtype.Position;
 
-import system.element.definition.Log;
-import system.element.definition.Staff;
+import system.element.Log;
+import system.element.Staff;
 
 
 

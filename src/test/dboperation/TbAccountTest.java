@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 
-import system.element.definition.Account;
+import system.element.Account;
 
 import database.connection.JDBCConnection;
 import database.operation.TbAccountOperation;

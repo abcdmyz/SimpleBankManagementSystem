@@ -12,7 +12,7 @@ import enumtype.AccountType;
 import enumtype.ClientType;
 import exception.dboperation.AccountDBOperationException;
 
-import system.element.definition.Account;
+import system.element.Account;
 
 
 

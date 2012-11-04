@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import system.element.definition.Log;
+import system.element.Log;
 
 import database.connection.JDBCConnection;
 import database.operation.TbLogOperation;

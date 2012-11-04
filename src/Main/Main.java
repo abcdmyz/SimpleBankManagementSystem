@@ -5,13 +5,14 @@ import java.text.ParseException;
 
 import exception.dboperation.AccountDBOperationException;
 
-import system.element.manager.AccountManager;
+import system.manager.AccountManager;
+import test.controller.AccountControllerTest;
 import test.dboperation.TbAccountTest;
 import test.dboperation.TbLogTest;
 import test.dboperation.TbStaffTest;
-import test.elementmanager.AccountEnterpriseManagerTest;
-import test.elementmanager.AccountOrdinaryManagerTest;
-import test.elementmanager.AccountVIPManagerTest;
+import test.manager.AccountEnterpriseManagerTest;
+import test.manager.AccountOrdinaryManagerTest;
+import test.manager.AccountVIPManagerTest;
 
 
 public class Main 
@@ -54,6 +55,8 @@ public class Main
 		
 		//AccountEnterpriseManagerTest.depositAccountTest();
 		//AccountEnterpriseManagerTest.withdrawAccountTest();
-		AccountEnterpriseManagerTest.transferAccountTest();
+		//AccountEnterpriseManagerTest.transferAccountTest();
+		
+		//AccountControllerTest.createAccountTest();
 	}
 }

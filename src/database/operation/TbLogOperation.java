@@ -13,8 +13,8 @@ import enumtype.AccountType;
 import enumtype.ClientType;
 import enumtype.OperationType;
 
-import system.element.definition.Account;
-import system.element.definition.Log;
+import system.element.Account;
+import system.element.Log;
 
 
 
