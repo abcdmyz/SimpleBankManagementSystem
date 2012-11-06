@@ -6,7 +6,7 @@ import java.text.ParseException;
 import exception.dboperation.AccountDBOperationException;
 
 import system.manager.AccountManager;
-import test.controller.AccountControllerTest;
+import test.controller.AccountControllerOrdinaryAccountTest;
 import test.dboperation.TbAccountTest;
 import test.dboperation.TbLogTest;
 import test.dboperation.TbStaffTest;
