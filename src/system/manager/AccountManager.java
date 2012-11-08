@@ -168,4 +168,5 @@ public abstract class AccountManager
 	public abstract void changePassword( Account account, Client client, String newPassword ) throws AccountManagerException, AccountDBOperationException;
 	public abstract double checkAccountBalance( Account account, Client client ) throws AccountManagerException, AccountDBOperationException;;
 	public abstract void addOperator( Account account, Client SuperClient, Client client) throws AccountManagerException, AccountDBOperationException;
+	public abstract Account checkAccountPassword( Account account, Client client ) throws AccountManagerException, AccountDBOperationException;
 }

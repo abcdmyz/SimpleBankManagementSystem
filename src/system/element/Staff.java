@@ -4,24 +4,26 @@ import enumtype.Position;
 
 public class Staff 
 {
-	private String staffID, superiorID;
+	private String staffID, superiorID, password;
 	private Position position;
 	
 	public Staff()
 	{
 	}
 	
-	public Staff( String staffID, Position position, String superiorID )
+	public Staff( String staffID, String password, Position position, String superiorID )
 	{
 		this.setStaffID(staffID);
 		this.setPosition(position);
 		this.setSuperiorID(superiorID);
+		this.setPassword(password);
 	}
 	
-	public Staff( String staffID, Position position)
+	public Staff( String staffID, String password, Position position)
 	{
 		this.setStaffID(staffID);
 		this.setPosition(position);
+		this.setPassword(password);
 	}
 
 	public void setStaffID(String staffID) {
@@ -46,5 +48,13 @@ public class Staff
 
 	public String getSuperiorID() {
 		return superiorID;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 }

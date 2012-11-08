@@ -212,4 +212,31 @@ public class AccountOrdinaryManager extends AccountManager
 		
 	}
 
+	@Override
+	public Account checkAccountPassword(Account account, Client client) throws AccountManagerException, AccountDBOperationException 
+	{
+		Connection connection = null;
+		Account account2 = new Account(); 
+		
+		try 
+		{
+			connection = JDBCConnection.getCommonConnection();
+			account2 = TbAccountOperation.selectAccount(connection, account.getAccountID());
+			
+			if ( ! account2.getPassword().equals(client.getPassword()) )
+			{
+				throw new AccountManagerException("Account " + account.getAccountID() + " Password Not Match");
+			}
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

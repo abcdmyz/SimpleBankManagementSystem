@@ -317,6 +317,33 @@ public class AccountEnterpriseManager extends AccountManager
 		} 
 
 	}
+	
+	@Override
+	public Account checkAccountPassword(Account account, Client client) throws AccountManagerException, AccountDBOperationException 
+	{
+		Connection connection = null;
+		Client operator= null;
+		
+		try 
+		{
+			connection = JDBCConnection.getCommonConnection();
+			operator = TbEnterpriseOperatorOperation.selectEnterpriseOperatorByAccountIDClientID(connection, account.getAccountID(), client.getClientID());
+			
+			if ( ! operator.getPassword().equals(client.getPassword()) )
+			{
+				throw new AccountManagerException("Operator " + client.getClientID() + " Password Not Match");
+			}
+		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	
 }

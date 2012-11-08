@@ -15,6 +15,7 @@ import enumtype.Position;
 
 public class TbStaffTest 
 {
+	/*
 	public static void newStaffTets() throws ClassNotFoundException, SQLException
 	{
 		Connection connection = JDBCConnection.getCommonConnection();
@@ -104,5 +105,5 @@ public class TbStaffTest
 	{
 		System.out.println(staff.getStaffID() + " " + staff.getPosition().toString() + " " + staff.getSuperiorID());
 	}
-
+*/
 }
