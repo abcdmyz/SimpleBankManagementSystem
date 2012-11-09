@@ -16,12 +16,15 @@ import exception.elmanager.AccountManagerException;
 
 import system.controller.AccountController;
 import system.element.Account;
+import system.element.Staff;
 import system.manager.AccountManager;
+import system.manager.LogManager;
 
 public class AccountControllerOrdinaryAccountTest 
 {
 	@Rule
 	public ExpectedException expectedEx = ExpectedException.none();
+	Staff staff = new Staff();
 	
 
 	@Before
@@ -29,6 +32,8 @@ public class AccountControllerOrdinaryAccountTest
 	{
 		AccountManager.deleteAllAccountForTest();
 		AccountManager.initial();
+		LogManager.deleteAllLogForTest();
+		LogManager.initial();
 	}
 	
 	@Test
@@ -36,8 +41,8 @@ public class AccountControllerOrdinaryAccountTest
 	{
 		AccountController accountController =  new AccountController();
 		
-		accountController.executeCommand("create", "C001 123 ordinary fixed 100 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C001 123 ordinary current 100 2012.10.10-00:00:00");
+		accountController.executeCommand("create", "C001 123 ordinary fixed 100 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C001 123 ordinary current 100 2012.10.10-00:00:00",staff);
 	}
 	
 	@Test
@@ -47,7 +52,7 @@ public class AccountControllerOrdinaryAccountTest
 	    expectedEx.expectMessage("Ordinary Account Initial Balance Must Greater Than 0");
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("create", "C001 123 ordinary current -100 2012.10.10-00:00:00");
+		accountController.executeCommand("create", "C001 123 ordinary current -100 2012.10.10-00:00:00",staff);
 	}
 	
 	public void setUpAccount() throws ParseException, AccountManagerException, AccountDBOperationException, ClassNotFoundException
@@ -56,15 +61,15 @@ public class AccountControllerOrdinaryAccountTest
 		AccountManager.initial();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("create", "C001 123 ordinary fixed 100 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C001 123 ordinary current 500 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C002 123 ordinary fixed 100 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C002 123 ordinary current 100 2012.10.10-00:00:00");
+		accountController.executeCommand("create", "C001 123 ordinary fixed 100 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C001 123 ordinary current 500 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C002 123 ordinary fixed 100 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C002 123 ordinary current 100 2012.10.10-00:00:00",staff);
 		
-		accountController.executeCommand("create", "C001 123 vip current 1000010 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C001 123 vip current 1000010 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C002 123 vip current 1000010 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C002 123 vip current 1000010 2012.10.10-00:00:00");
+		accountController.executeCommand("create", "C001 123 vip current 1000010 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C001 123 vip current 1000010 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C002 123 vip current 1000010 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C002 123 vip current 1000010 2012.10.10-00:00:00",staff);
 		
 	
 	}
@@ -78,7 +83,7 @@ public class AccountControllerOrdinaryAccountTest
 	    expectedEx.expectMessage("Account A011 Don't Exist");
 			
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("deposit", "A011 123 300");
+		accountController.executeCommand("deposit", "A011 123 300",staff);
 	}
 	
 	@Test
@@ -87,7 +92,7 @@ public class AccountControllerOrdinaryAccountTest
 		setUpAccount();
 			
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("deposit", "A001 123 300");
+		accountController.executeCommand("deposit", "A001 123 300",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -103,7 +108,7 @@ public class AccountControllerOrdinaryAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("deposit", "A001 123 -300");
+		accountController.executeCommand("deposit", "A001 123 -300",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -121,7 +126,7 @@ public class AccountControllerOrdinaryAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("deposit", "A001 999 300");
+		accountController.executeCommand("deposit", "A001 999 300",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -134,7 +139,7 @@ public class AccountControllerOrdinaryAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A001 123 50");
+		accountController.executeCommand("withdraw", "A001 123 50",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -150,7 +155,7 @@ public class AccountControllerOrdinaryAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A001 123 -300");
+		accountController.executeCommand("withdraw", "A001 123 -300",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -166,7 +171,7 @@ public class AccountControllerOrdinaryAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A001 999 50");
+		accountController.executeCommand("withdraw", "A001 999 50",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -183,7 +188,7 @@ public class AccountControllerOrdinaryAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A001 123 300");
+		accountController.executeCommand("withdraw", "A001 123 300",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -196,7 +201,7 @@ public class AccountControllerOrdinaryAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("checkbalance", "A001 123");
+		String balance = accountController.executeCommand("checkbalance", "A001 123",staff);
 		
 		String expectBalance = "Account Balance " + Double.valueOf(100).toString();
 		assertEquals(expectBalance, balance);		
@@ -211,7 +216,7 @@ public class AccountControllerOrdinaryAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("checkbalance", "A001 999");	
+		accountController.executeCommand("checkbalance", "A001 999",staff);	
 	}
 	
 	@Test
@@ -220,7 +225,7 @@ public class AccountControllerOrdinaryAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A002 123 A001 300");
+		String balance = accountController.executeCommand("transfer", "A002 123 A001 300",staff);
 		
 		Account account1 = AccountManager.selectAccount("A002");
 		Account account2 = AccountManager.selectAccount("A001");
@@ -239,7 +244,7 @@ public class AccountControllerOrdinaryAccountTest
 	    setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A002 999 A001 300");
+		String balance = accountController.executeCommand("transfer", "A002 999 A001 300",staff);
 		
 		Account account1 = AccountManager.selectAccount("A002");
 		Account account2 = AccountManager.selectAccount("A001");
@@ -258,7 +263,7 @@ public class AccountControllerOrdinaryAccountTest
 	    setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A002 123 A999 300");
+		String balance = accountController.executeCommand("transfer", "A002 123 A999 300",staff);
 		
 		Account account1 = AccountManager.selectAccount("A002");	
 		assertEquals((double)500, account1.getBalance(), (double)0);
@@ -273,7 +278,7 @@ public class AccountControllerOrdinaryAccountTest
 	    setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A002 123 A001 -300");
+		String balance = accountController.executeCommand("transfer", "A002 123 A001 -300",staff);
 		
 		Account account1 = AccountManager.selectAccount("A002");
 		Account account2 = AccountManager.selectAccount("A001");
@@ -291,7 +296,7 @@ public class AccountControllerOrdinaryAccountTest
 	    setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A002 123 A001 3000");
+		String balance = accountController.executeCommand("transfer", "A002 123 A001 3000",staff);
 		
 		Account account1 = AccountManager.selectAccount("A002");
 		Account account2 = AccountManager.selectAccount("A001");
@@ -309,7 +314,7 @@ public class AccountControllerOrdinaryAccountTest
 	    setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A002 123 A003 300");
+		String balance = accountController.executeCommand("transfer", "A002 123 A003 300",staff);
 		
 		Account account1 = AccountManager.selectAccount("A002");
 		Account account2 = AccountManager.selectAccount("A003");
@@ -327,7 +332,7 @@ public class AccountControllerOrdinaryAccountTest
 	    setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A002 123 A005 300");
+		String balance = accountController.executeCommand("transfer", "A002 123 A005 300",staff);
 		
 		Account account1 = AccountManager.selectAccount("A002");
 		Account account2 = AccountManager.selectAccount("A005");
@@ -342,9 +347,9 @@ public class AccountControllerOrdinaryAccountTest
 	    setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("chpasswd", "A001 123 999");
+		accountController.executeCommand("chpasswd", "A001 123 999",staff);
 		
-		String balance = accountController.executeCommand("checkbalance", "A001 123");
+		String balance = accountController.executeCommand("checkbalance", "A001 123",staff);
 		
 		String expectBalance = "Account Balance " + Double.valueOf(100).toString();
 		assertEquals(expectBalance, balance);	
@@ -359,9 +364,9 @@ public class AccountControllerOrdinaryAccountTest
 	    setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("chpasswd", "A001 999 123");
+		accountController.executeCommand("chpasswd", "A001 999 123",staff);
 		
-		String balance = accountController.executeCommand("checkbalance", "A001 123");
+		String balance = accountController.executeCommand("checkbalance", "A001 123",staff);
 		
 		String expectBalance = "Account Balance " + Double.valueOf(100).toString();
 		assertEquals(expectBalance, balance);	

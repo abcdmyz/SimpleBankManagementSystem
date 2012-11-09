@@ -2,8 +2,9 @@ package enumtype;
 
 public enum OperationType 
 {
-	create("create"), deposit("deposit"), withdraw("withdraw"), check("check"), 
-	transfer("transfer"), chpassword("chpassword"), cancel("cancel");
+	create("create"), deposit("deposit"), withdraw("withdraw"), checkbalance("checkbalance"), 
+	transfer("transfer"), chpassword("chpassword"), cancel("cancel"), addoperator("addoperator"),
+	withdrawin("withdrawin");
 	
 	private String typeName;
 	

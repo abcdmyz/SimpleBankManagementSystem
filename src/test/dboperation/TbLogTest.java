@@ -115,7 +115,7 @@ public class TbLogTest
 		
 		ArrayList<Log> logs = new ArrayList<Log>();
 		
-		logs = TbLogOperation.selectLogsByStaffID(connection, "S0002");
+		logs = TbLogOperation.selectLogsByOperatorID(connection, "S0002");
 		
 		for ( Log log: logs)
 		{

@@ -19,6 +19,21 @@ public class Log
 		
 	}
 	
+	public String toString()
+	{
+		String s = new String();
+		
+		s += logID.toString();
+		s += " " + staffID.toString();
+		s += " " + accountID.toString();
+		s += " " + clientID.toString();
+		s += " " + operatedAccountID.toString();
+		s += " " + operationType.toString();
+		s += " " + Double.valueOf(operatedBalance).toString();
+		s += " " + logTime.toGMTString();
+		return s;
+	}
+	
 	public Log( String logID, String staffID, String accountID, String clientID )
 	{
 		this.setLogID(logID);

@@ -11,7 +11,9 @@ import org.junit.rules.ExpectedException;
 
 import system.controller.AccountController;
 import system.element.Account;
+import system.element.Staff;
 import system.manager.AccountManager;
+import system.manager.LogManager;
 import exception.dboperation.AccountDBOperationException;
 import exception.elmanager.AccountManagerException;
 
@@ -20,6 +22,7 @@ public class AccountControllerEnterpriseAccountTest
 {
 	@Rule
 	public ExpectedException expectedEx = ExpectedException.none();
+	Staff staff = new Staff();
 	
 
 	@Before
@@ -28,6 +31,8 @@ public class AccountControllerEnterpriseAccountTest
 		AccountManager.deleteAllAccountForTest();
 		AccountManager.deleteAllClientForTest();
 		AccountManager.initial();
+		LogManager.deleteAllLogForTest();
+		LogManager.initial();
 	}
 	
 	
@@ -35,7 +40,7 @@ public class AccountControllerEnterpriseAccountTest
 	public void createeAccountTestNormal() throws ParseException, AccountManagerException, AccountDBOperationException
 	{
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("create", "C001 123 enterprise current 10000 2012.10.10-00:00:00");
+		accountController.executeCommand("create", "C001 123 enterprise current 10000 2012.10.10-00:00:00", staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -49,7 +54,7 @@ public class AccountControllerEnterpriseAccountTest
 	    expectedEx.expectMessage("Enterprise Account Initial Balance Must Greater Than 0");
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("create", "C002 123 enterprise current -100 2012.10.10-00:00:00");
+		accountController.executeCommand("create", "C002 123 enterprise current -100 2012.10.10-00:00:00",staff);
 	}
 	
 	
@@ -60,18 +65,18 @@ public class AccountControllerEnterpriseAccountTest
 		AccountManager.initial();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("create", "C001 123 enterprise fixed 10000 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C001 123 enterprise current 50000 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C002 123 enterprise fixed 10000 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C002 123 enterprise current 50000 2012.10.10-00:00:00");
+		accountController.executeCommand("create", "C001 123 enterprise fixed 10000 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C001 123 enterprise current 50000 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C002 123 enterprise fixed 10000 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C002 123 enterprise current 50000 2012.10.10-00:00:00",staff);
 		
-		accountController.executeCommand("create", "C003 123 enterprise current 10000 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C003 123 enterprise current 10000 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C004 123 enterprise current 10000 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C004 123 enterprise current 10000 2012.10.10-00:00:00");
+		accountController.executeCommand("create", "C003 123 enterprise current 10000 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C003 123 enterprise current 10000 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C004 123 enterprise current 10000 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C004 123 enterprise current 10000 2012.10.10-00:00:00",staff);
 		
-		accountController.executeCommand("create", "C005 123 ordinary fixed 100 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C006 123 vip current 1000010 2012.10.10-00:00:00");
+		accountController.executeCommand("create", "C005 123 ordinary fixed 100 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C006 123 vip current 1000010 2012.10.10-00:00:00",staff);
 	}
 	
 	public void setUpAccountAndOperator() throws ParseException, AccountManagerException, AccountDBOperationException, ClassNotFoundException
@@ -81,23 +86,23 @@ public class AccountControllerEnterpriseAccountTest
 		AccountManager.initial();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("create", "C001 123 enterprise fixed 10000 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C001 123 enterprise current 50000 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C002 123 enterprise fixed 10000 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C002 123 enterprise current 50000 2012.10.10-00:00:00");
+		accountController.executeCommand("create", "C001 123 enterprise fixed 10000 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C001 123 enterprise current 50000 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C002 123 enterprise fixed 10000 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C002 123 enterprise current 50000 2012.10.10-00:00:00",staff);
 		
-		accountController.executeCommand("create", "C003 123 enterprise current 10000 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C003 123 enterprise current 10000 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C004 123 enterprise current 10000 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C004 123 enterprise current 10000 2012.10.10-00:00:00");
+		accountController.executeCommand("create", "C003 123 enterprise current 10000 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C003 123 enterprise current 10000 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C004 123 enterprise current 10000 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C004 123 enterprise current 10000 2012.10.10-00:00:00",staff);
 		
-		accountController.executeCommand("create", "C005 123 ordinary fixed 100 2012.10.10-00:00:00");
-		accountController.executeCommand("create", "C006 123 vip current 1000010 2012.10.10-00:00:00");
+		accountController.executeCommand("create", "C005 123 ordinary fixed 100 2012.10.10-00:00:00",staff);
+		accountController.executeCommand("create", "C006 123 vip current 1000010 2012.10.10-00:00:00",staff);
 		
-		accountController.executeCommand("addoperator", "A001 C001 123 OA1001 999");
-		accountController.executeCommand("addoperator", "A001 C001 123 OA1002 999");
-		accountController.executeCommand("addoperator", "A003 C002 123 OA2001 999");
-		accountController.executeCommand("addoperator", "A003 C002 123 OA2002 999");
+		accountController.executeCommand("addoperator", "A001 C001 123 OA1001 999", staff);
+		accountController.executeCommand("addoperator", "A001 C001 123 OA1002 999",staff);
+		accountController.executeCommand("addoperator", "A003 C002 123 OA2001 999",staff);
+		accountController.executeCommand("addoperator", "A003 C002 123 OA2002 999",staff);
 	}
 	
 	
@@ -107,7 +112,7 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 			
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("deposit", "A001 C001 123 30000");
+		accountController.executeCommand("deposit", "A001 C001 123 30000",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -120,7 +125,7 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 			
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("deposit", "A001 OA1001 999 30000");
+		accountController.executeCommand("deposit", "A001 OA1001 999 30000",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -136,7 +141,7 @@ public class AccountControllerEnterpriseAccountTest
 	    expectedEx.expectMessage("Account A011 Don't Exist");
 			
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("deposit", "A011 C001 123 300");
+		accountController.executeCommand("deposit", "A011 C001 123 300",staff);
 	}
 	
 	@Test
@@ -148,7 +153,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("deposit", "A001 C001 123 -300");
+		accountController.executeCommand("deposit", "A001 C001 123 -300",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -165,7 +170,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("deposit", "A001 C111 123 300");	
+		accountController.executeCommand("deposit", "A001 C111 123 300",staff);	
 	}
 	
 	@Test
@@ -177,7 +182,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("deposit", "A001 OA2001 999 300");
+		accountController.executeCommand("deposit", "A001 OA2001 999 300",staff);
 	}	
 	
 	@Test
@@ -189,7 +194,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("deposit", "A001 C001 000 300");		
+		accountController.executeCommand("deposit", "A001 C001 000 300",staff);		
 	}
 	
 	@Test
@@ -201,7 +206,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("deposit", "A001 OA1001 000 300");		
+		accountController.executeCommand("deposit", "A001 OA1001 000 300",staff);		
 	}
 	
 	@Test
@@ -210,7 +215,7 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 			
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A001 C001 123 5000");
+		accountController.executeCommand("withdraw", "A001 C001 123 5000",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -223,7 +228,7 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 			
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A001 OA1001 999 5000");
+		accountController.executeCommand("withdraw", "A001 OA1001 999 5000",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -239,7 +244,7 @@ public class AccountControllerEnterpriseAccountTest
 	    expectedEx.expectMessage("Account A011 Don't Exist");
 			
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A011 C001 123 300");
+		accountController.executeCommand("withdraw", "A011 C001 123 300",staff);
 	}
 	
 	@Test
@@ -251,7 +256,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A001 C001 123 -300");
+		accountController.executeCommand("withdraw", "A001 C001 123 -300",staff);
 		
 		Account account = new Account();
 		account = AccountManager.selectAccount("A001");
@@ -268,7 +273,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A001 C111 123 300");	
+		accountController.executeCommand("withdraw", "A001 C111 123 300",staff);	
 	}
 	
 	@Test
@@ -280,7 +285,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A001 OA2001 999 300");
+		accountController.executeCommand("withdraw", "A001 OA2001 999 300",staff);
 	}	
 	
 	@Test
@@ -292,7 +297,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A001 C001 000 300");		
+		accountController.executeCommand("withdraw", "A001 C001 000 300",staff);		
 	}
 	
 	@Test
@@ -304,7 +309,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A001 OA1001 000 300");		
+		accountController.executeCommand("withdraw", "A001 OA1001 000 300",staff);		
 	}
 	
 	@Test
@@ -316,7 +321,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("withdraw", "A001 OA1001 999 30000");		
+		accountController.executeCommand("withdraw", "A001 OA1001 999 30000",staff);		
 	}
 	
 	
@@ -327,7 +332,7 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("checkbalance", "A001 C001 123");
+		String balance = accountController.executeCommand("checkbalance", "A001 C001 123",staff);
 		
 		String expectBalance = "Account Balance " + Double.valueOf(10000).toString();
 		assertEquals(expectBalance, balance);		
@@ -339,7 +344,7 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("checkbalance", "A001 OA1001 999");
+		String balance = accountController.executeCommand("checkbalance", "A001 OA1001 999",staff);
 		
 		String expectBalance = "Account Balance " + Double.valueOf(10000).toString();
 		assertEquals(expectBalance, balance);		
@@ -354,7 +359,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("checkbalance", "A001 C001 999");	
+		accountController.executeCommand("checkbalance", "A001 C001 999",staff);	
 	}
 	
 	@Test
@@ -366,7 +371,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("checkbalance", "A001 OA1001 000");	
+		accountController.executeCommand("checkbalance", "A001 OA1001 000",staff);	
 	}
 	
 	
@@ -376,7 +381,7 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 123 A002 5000");
+		String balance = accountController.executeCommand("transfer", "A001 C001 123 A002 5000",staff);
 		
 		Account account1 = AccountManager.selectAccount("A001");
 		Account account2 = AccountManager.selectAccount("A002");
@@ -391,7 +396,7 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 OA1001 999 A002 5000");
+		String balance = accountController.executeCommand("transfer", "A001 OA1001 999 A002 5000",staff);
 		
 		Account account1 = AccountManager.selectAccount("A001");
 		Account account2 = AccountManager.selectAccount("A002");
@@ -411,7 +416,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 999 A002 1000");
+		String balance = accountController.executeCommand("transfer", "A001 C001 999 A002 1000",staff);
 	}
 	
 	@Test
@@ -423,7 +428,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 OA1001 123 A002 1000");
+		String balance = accountController.executeCommand("transfer", "A001 OA1001 123 A002 1000",staff);
 	}
 	
 	
@@ -436,7 +441,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C999 123 A002 1000");
+		String balance = accountController.executeCommand("transfer", "A001 C999 123 A002 1000",staff);
 	}
 	
 	
@@ -450,7 +455,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 123 A999 300");
+		String balance = accountController.executeCommand("transfer", "A001 C001 123 A999 300",staff);
 	}
 	
 	
@@ -463,7 +468,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 123 A001 -300");
+		String balance = accountController.executeCommand("transfer", "A001 C001 123 A001 -300",staff);
 	}
 	
 	@Test
@@ -475,7 +480,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 123 A002 300000");
+		String balance = accountController.executeCommand("transfer", "A001 C001 123 A002 300000",staff);
 	}
 	
 	@Test
@@ -487,7 +492,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 123 A009 300");
+		String balance = accountController.executeCommand("transfer", "A001 C001 123 A009 300",staff);
 	}
 	
 
@@ -500,7 +505,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 123 A010 300");
+		String balance = accountController.executeCommand("transfer", "A001 C001 123 A010 300",staff);
 	}
 	
 	
@@ -511,9 +516,9 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("chpasswd", "A001 C001 123 999");
+		accountController.executeCommand("chpasswd", "A001 C001 123 999",staff);
 		
-		String balance = accountController.executeCommand("checkbalance", "A001 C001 999");
+		String balance = accountController.executeCommand("checkbalance", "A001 C001 999",staff);
 		
 		String expectBalance = "Account Balance " + Double.valueOf(10000).toString();
 		assertEquals(expectBalance, balance);	
@@ -525,9 +530,9 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("chpasswd", "A001 OA1001 999 123");
+		accountController.executeCommand("chpasswd", "A001 OA1001 999 123",staff);
 		
-		String balance = accountController.executeCommand("checkbalance", "A001 OA1001 123");
+		String balance = accountController.executeCommand("checkbalance", "A001 OA1001 123",staff);
 		
 		String expectBalance = "Account Balance " + Double.valueOf(10000).toString();
 		assertEquals(expectBalance, balance);	
@@ -542,7 +547,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("chpasswd", "A001 OA1001 222 123");	
+		accountController.executeCommand("chpasswd", "A001 OA1001 222 123",staff);	
 	}
 	
 	
@@ -552,9 +557,9 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("addoperator", "A001 C001 123 OA1001 999");
+		accountController.executeCommand("addoperator", "A001 C001 123 OA1001 999",staff);
 		
-		String balance = accountController.executeCommand("checkbalance", "A001 OA1001 999");
+		String balance = accountController.executeCommand("checkbalance", "A001 OA1001 999",staff);
 		String expectBalance = "Account Balance " + Double.valueOf(10000).toString();
 		assertEquals(expectBalance, balance);	
 	}
@@ -568,7 +573,7 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("addoperator", "A001 C002 123 OA1001 999");	
+		accountController.executeCommand("addoperator", "A001 C002 123 OA1001 999",staff);	
 	}
 	
 	@Test
@@ -580,7 +585,7 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("addoperator", "A001 C001 999 OA1001 999");
+		accountController.executeCommand("addoperator", "A001 C001 999 OA1001 999",staff);
 	}
 	
 	@Test
@@ -592,8 +597,8 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("addoperator", "A001 C001 123 OA1001 999");
-		accountController.executeCommand("addoperator", "A001 OA1001 999 OA1002 999");	
+		accountController.executeCommand("addoperator", "A001 C001 123 OA1001 999",staff);
+		accountController.executeCommand("addoperator", "A001 OA1001 999 OA1002 999",staff);	
 	}
 	
 	@Test
@@ -605,6 +610,6 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccount();
 		
 		AccountController accountController =  new AccountController();	
-		accountController.executeCommand("addoperator", "A111 C001 123 OA1001 999");	
+		accountController.executeCommand("addoperator", "A111 C001 123 OA1001 999",staff);	
 	}
 }

@@ -50,7 +50,104 @@ public class TbLogOperation
 		}
 	}
 	
-	public static ArrayList<Log> selectLogsByStaffID( Connection connection, String staffID )
+	public static ArrayList<Log> selectAllLogs (Connection connection )
+	{
+		ArrayList<Log> logs = new ArrayList();
+		
+		PreparedStatement pstmt;
+		ResultSet resultset;	
+
+		try
+		{	
+			pstmt = connection.prepareStatement ("SELECT * FROM log;");
+			resultset = pstmt.executeQuery();
+
+			while ( resultset.next() )
+			{
+				Log log = new Log();
+				
+				log.setLogID(resultset.getString("log_id"));
+				log.setStaffID(resultset.getString("staff_id"));
+				log.setAccountID(resultset.getString("account_id"));
+				log.setClientID(resultset.getString("client_id"));
+				log.setOperatedAccountID(resultset.getString("operated_account_id"));
+				log.setOperatedBalance(resultset.getDouble("operated_balance"));
+				log.setLogTime(resultset.getTimestamp("log_time"));
+
+				
+				String type;
+				type = resultset.getString("operation_type");
+				log.setOperationType(OperationType.getEnumFromString(type));
+				
+				logs.add(log);
+			}
+			
+			connection.setAutoCommit(false);
+			pstmt.close();
+			resultset.close();
+			connection.commit();
+		}
+
+		catch (SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		
+
+		return logs;
+	}
+	
+	public static ArrayList<Log> selectAllLogsInTime( Connection connection, Date startDate, Date endDate )
+	{
+		ArrayList<Log> logs = new ArrayList();
+		
+		PreparedStatement pstmt;
+		ResultSet resultset;	
+		
+		try
+		{	
+			pstmt = connection.prepareStatement ("SELECT * FROM log WHERE log_time >= ? AND log_time <= ?;");
+
+			pstmt.setObject(1, startDate);
+			pstmt.setObject(2, endDate);
+			
+			resultset = pstmt.executeQuery();
+
+			while ( resultset.next() )
+			{
+				Log log = new Log();
+				
+				log.setLogID(resultset.getString("log_id"));
+				log.setStaffID(resultset.getString("staff_id"));
+				log.setAccountID(resultset.getString("account_id"));
+				log.setClientID(resultset.getString("client_id"));
+				log.setOperatedAccountID(resultset.getString("operated_account_id"));
+				log.setOperatedBalance(resultset.getDouble("operated_balance"));
+				log.setLogTime(resultset.getTimestamp("log_time"));
+
+				
+				String type;
+				type = resultset.getString("operation_type");
+				log.setOperationType(OperationType.getEnumFromString(type));
+				
+				logs.add(log);
+			}
+			
+			connection.setAutoCommit(false);
+			pstmt.close();
+			resultset.close();
+			connection.commit();
+		}
+
+		catch (SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+	
+		return logs;
+	}
+	
+	public static ArrayList<Log> selectLogsByOperatorID( Connection connection, String staffID )
 	{
 		ArrayList<Log> logs = new ArrayList();
 		
@@ -99,6 +196,109 @@ public class TbLogOperation
 		return logs;
 	}
 	
+	public static ArrayList<Log> selectLogsByManagerID( Connection connection, String staffID )
+	{
+		ArrayList<Log> logs = new ArrayList();
+		
+		PreparedStatement pstmt;
+		ResultSet resultset;	
+
+		try
+		{	
+			pstmt = connection.prepareStatement ("SELECT * FROM Log l, Staff s WHERE (l.staff_id=?) OR (l.staff_id=s.staff_id AND s.superior_id=?);");
+
+			pstmt.setString(1, staffID);
+			pstmt.setString(2, staffID);
+			
+			resultset = pstmt.executeQuery();
+
+			while ( resultset.next() )
+			{
+				Log log = new Log();
+				
+				log.setLogID(resultset.getString("log_id"));
+				log.setStaffID(resultset.getString("staff_id"));
+				log.setAccountID(resultset.getString("account_id"));
+				log.setClientID(resultset.getString("client_id"));
+				log.setOperatedAccountID(resultset.getString("operated_account_id"));
+				log.setOperatedBalance(resultset.getDouble("operated_balance"));
+				log.setLogTime(resultset.getTimestamp("log_time"));
+
+				
+				String type;
+				type = resultset.getString("operation_type");
+				log.setOperationType(OperationType.getEnumFromString(type));
+				
+				logs.add(log);
+			}
+			
+			connection.setAutoCommit(false);
+			pstmt.close();
+			resultset.close();
+			connection.commit();
+		}
+
+		catch (SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		
+
+		return logs;
+	}
+	
+	public static ArrayList<Log> selectLogsByDirectorID( Connection connection, String staffID )
+	{
+		ArrayList<Log> logs = new ArrayList();
+		
+		PreparedStatement pstmt;
+		ResultSet resultset;	
+
+		try
+		{	
+			pstmt = connection.prepareStatement ("SELECT * FROM Log l, Staff m, Staff o WHERE (l.staff_id=?) OR (l.staff_id=m.staff_id AND m.superior_id=?) OR (l.staff_id=o.staff_id AND m.superior_id=? AND o.superior_id=m.staff_id);");
+
+			pstmt.setString(1, staffID);
+			pstmt.setString(2, staffID);
+			pstmt.setString(3, staffID);
+			
+			resultset = pstmt.executeQuery();
+
+			while ( resultset.next() )
+			{
+				Log log = new Log();
+				
+				log.setLogID(resultset.getString("log_id"));
+				log.setStaffID(resultset.getString("staff_id"));
+				log.setAccountID(resultset.getString("account_id"));
+				log.setClientID(resultset.getString("client_id"));
+				log.setOperatedAccountID(resultset.getString("operated_account_id"));
+				log.setOperatedBalance(resultset.getDouble("operated_balance"));
+				log.setLogTime(resultset.getTimestamp("log_time"));
+
+				
+				String type;
+				type = resultset.getString("operation_type");
+				log.setOperationType(OperationType.getEnumFromString(type));
+				
+				logs.add(log);
+			}
+			
+			connection.setAutoCommit(false);
+			pstmt.close();
+			resultset.close();
+			connection.commit();
+		}
+
+		catch (SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		
+
+		return logs;
+	}
+	
 	public static ArrayList<Log> selectLogsByAccountID( Connection connection, String accountID )
 	{
 		ArrayList<Log> logs = new ArrayList();
@@ -110,9 +310,10 @@ public class TbLogOperation
 		
 		try
 		{	
-			pstmt = connection.prepareStatement ("SELECT * FROM log WHERE account_id = ? ;");
+			pstmt = connection.prepareStatement ("SELECT * FROM log WHERE account_id = ? || operated_account_id = ? ;");
 
 			pstmt.setString(1, accountID);
+			pstmt.setString(2, accountID);
 			resultset = pstmt.executeQuery();
 
 			while ( resultset.next() )
@@ -159,11 +360,12 @@ public class TbLogOperation
 		
 		try
 		{	
-			pstmt = connection.prepareStatement ("SELECT * FROM log WHERE account_id = ? AND log_time >= ? AND log_time <= ?;");
+			pstmt = connection.prepareStatement ("SELECT * FROM log WHERE (account_id = ? || operated_account_id = ? )AND log_time >= ? AND log_time <= ?;");
 
 			pstmt.setString(1, accountID);
-			pstmt.setObject(2, startDate);
-			pstmt.setObject(3, endDate);
+			pstmt.setString(2, accountID);
+			pstmt.setObject(3, startDate);
+			pstmt.setObject(4, endDate);
 			
 			resultset = pstmt.executeQuery();
 
@@ -201,6 +403,7 @@ public class TbLogOperation
 		return logs;
 	}
 	
+	/*
 	public static ArrayList<Log> selectLogsByStaffIDInTime( Connection connection, String staffID, Date startDate, Date endDate )
 	{
 		ArrayList<Log> logs = new ArrayList();
@@ -303,55 +506,7 @@ public class TbLogOperation
 		return logs;
 	}
 	
-	public static ArrayList<Log> selectLogsInTime( Connection connection, Date startDate, Date endDate )
-	{
-		ArrayList<Log> logs = new ArrayList();
-		
-		PreparedStatement pstmt;
-		ResultSet resultset;	
-		
-		try
-		{	
-			pstmt = connection.prepareStatement ("SELECT * FROM log WHERE log_time >= ? AND log_time <= ?;");
 
-			pstmt.setObject(1, startDate);
-			pstmt.setObject(2, endDate);
-			
-			resultset = pstmt.executeQuery();
-
-			while ( resultset.next() )
-			{
-				Log log = new Log();
-				
-				log.setLogID(resultset.getString("log_id"));
-				log.setStaffID(resultset.getString("staff_id"));
-				log.setAccountID(resultset.getString("account_id"));
-				log.setClientID(resultset.getString("client_id"));
-				log.setOperatedAccountID(resultset.getString("operated_account_id"));
-				log.setOperatedBalance(resultset.getDouble("operated_balance"));
-				log.setLogTime(resultset.getTimestamp("log_time"));
-
-				
-				String type;
-				type = resultset.getString("operation_type");
-				log.setOperationType(OperationType.getEnumFromString(type));
-				
-				logs.add(log);
-			}
-			
-			connection.setAutoCommit(false);
-			pstmt.close();
-			resultset.close();
-			connection.commit();
-		}
-
-		catch (SQLException ex)
-		{
-			System.err.println(ex.getMessage());
-		}
-	
-		return logs;
-	}
 	
 	public static ArrayList<Log> selectLogsBySuperiorID( Connection connection, String superiorID )
 	{
@@ -454,6 +609,7 @@ public class TbLogOperation
 	
 		return logs;
 	}
+	*/
 	
 	public static void deleteLogTable( Connection connection ) throws SQLException
 	{
