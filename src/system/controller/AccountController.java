@@ -13,19 +13,22 @@ import exception.elmanager.AccountManagerException;
 import system.element.Account;
 import system.element.Client;
 import system.element.Log;
+import system.element.ReturnObjectSet;
 import system.element.Staff;
 import system.manager.AccountManager;
+import system.manager.LogAccountManager;
 import system.manager.LogManager;
 
 public class AccountController 
 {
 	private Staff staff;
 	
-	public String executeCommand( String operation, String parameter, Staff currentStaff ) throws ParseException, AccountManagerException, AccountDBOperationException
+	public ReturnObjectSet executeCommand( String operation, String parameter, Staff currentStaff ) throws ParseException, AccountManagerException, AccountDBOperationException
 	{
 		Account account = null;
 		AccountManager accountManager = null;
 		String returnMessage = null;
+		ReturnObjectSet returnObject = new ReturnObjectSet();
 		staff = currentStaff;
 		
 		String[] parameters = parameter.split(" ");
@@ -35,6 +38,7 @@ public class AccountController
 			if ( operation.equals("create") )
 			{
 				accountID = executeCreateAccount(account, parameters);
+				returnObject.setReturnMessage("Create Account Successfully. AccountID " + accountID );
 			}
 			
 			else
@@ -53,13 +57,16 @@ public class AccountController
 				else if ( operation.equals("checkbalance") )
 				{
 					balance = executeCheckAccountBalance(account, parameters);
-					returnMessage = "Account Balance " + Double.valueOf(balance).toString();
+					returnObject.setReturnMessage("Account Balance " + Double.valueOf(balance).toString());
 				}
 				else if ( operation.equals("transfer") )
 					executeTransferAccount(account, parameters);
 				
 				else if ( operation.equals("addoperator") )
 					executeAddOperator(account, parameters);
+				
+				else if ( operation.equals("checklog") )
+					returnObject = executeCheckLog(account, parameters);
 			}
 			
 		
@@ -81,7 +88,67 @@ public class AccountController
 		}
 		*/
 			
-		return returnMessage;
+		return returnObject;
+		
+	}
+
+	private ReturnObjectSet executeCheckLog(Account account, String[] parameters) throws AccountManagerException, AccountDBOperationException 
+	{
+		ReturnObjectSet returnObject = new ReturnObjectSet();
+		Client client;
+		Date sDate = new Date();
+		Date eDate = new Date();
+		boolean hasDate = false;
+	
+		if ( !account.getClientType().equals(ClientType.enterprise))
+		{
+			client = new Client( account.getAccountID(), account.getClientID(), parameters[1]);
+			
+			if ( parameters.length >= 4 )
+			{
+				SimpleDateFormat simFormat = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss");
+				try 
+				{
+					sDate = simFormat.parse(parameters[2]);
+					eDate = simFormat.parse(parameters[3]);
+					
+					hasDate = true;
+				} 
+				catch (ParseException e) 
+				{
+					throw new AccountManagerException("Date Formate Wrong");
+				}
+			}
+		}
+		else
+		{
+			client = new Client( account.getAccountID(), parameters[1], parameters[2]);
+			
+			if ( parameters.length >= 5 )
+			{
+				SimpleDateFormat simFormat = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss");
+				try 
+				{
+					sDate = simFormat.parse(parameters[3]);
+					eDate = simFormat.parse(parameters[4]);
+					
+					hasDate = true;
+				} 
+				catch (ParseException e) {
+				
+					throw new AccountManagerException("Date Formate Wrong");
+				}
+			}
+		}
+		
+		LogAccountManager logAccountManager = new LogAccountManager();
+		
+		if ( !hasDate )
+			returnObject = logAccountManager.checkAccountLog(account, client);
+		else
+			returnObject = logAccountManager.checkAccountLog(account, client, sDate, eDate);
+		
+		return returnObject;
 		
 	}
 

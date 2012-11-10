@@ -156,6 +156,7 @@ public class TbLogOperation
 
 		try
 		{	
+			//System.out.println(staffID);
 			pstmt = connection.prepareStatement ("SELECT * FROM log WHERE staff_id = ? ;");
 
 			pstmt.setString(1, staffID);
@@ -205,10 +206,11 @@ public class TbLogOperation
 
 		try
 		{	
-			pstmt = connection.prepareStatement ("SELECT * FROM Log l, Staff s WHERE (l.staff_id=?) OR (l.staff_id=s.staff_id AND s.superior_id=?);");
+			pstmt = connection.prepareStatement ("SELECT * FROM Log l, Staff s WHERE l.staff_id=s.staff_id AND ( l.staff_id=? OR s.superior_id=? )");
 
 			pstmt.setString(1, staffID);
 			pstmt.setString(2, staffID);
+			
 			
 			resultset = pstmt.executeQuery();
 
@@ -230,6 +232,8 @@ public class TbLogOperation
 				log.setOperationType(OperationType.getEnumFromString(type));
 				
 				logs.add(log);
+				
+				//System.out.println(log);
 			}
 			
 			connection.setAutoCommit(false);
@@ -254,9 +258,11 @@ public class TbLogOperation
 		PreparedStatement pstmt;
 		ResultSet resultset;	
 
+		
+		
 		try
 		{	
-			pstmt = connection.prepareStatement ("SELECT * FROM Log l, Staff m, Staff o WHERE (l.staff_id=?) OR (l.staff_id=m.staff_id AND m.superior_id=?) OR (l.staff_id=o.staff_id AND m.superior_id=? AND o.superior_id=m.staff_id);");
+			pstmt = connection.prepareStatement ("select * from log l, staff s1, staff s2 where ( l.staff_id = s2.staff_id) AND (s1.superior_id=? OR s1.staff_id=? ) AND (s2.superior_id=s1.staff_id OR (s1.staff_id=? AND s2.staff_id=s1.staff_id));");
 
 			pstmt.setString(1, staffID);
 			pstmt.setString(2, staffID);

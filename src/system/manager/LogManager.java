@@ -12,7 +12,7 @@ import database.operation.TbStaffOperation;
 import exception.dboperation.StaffDBOperationException;
 import system.element.Account;
 import system.element.Log;
-import system.element.LogList;
+import system.element.ReturnObjectSet;
 
 public class LogManager 
 {
@@ -66,10 +66,10 @@ public class LogManager
 		}	
 	}
 	
-	public static LogList checkAllLogForTest( Account account )
+	public static ReturnObjectSet checkAllLogForTest( Account account )
 	{
 		ArrayList<Log> logs = new ArrayList<Log>();
-		LogList logList = new LogList();
+		ReturnObjectSet logList = new ReturnObjectSet();
 		
 		Connection connection;
 		try 
@@ -108,10 +108,10 @@ public class LogManager
 	}
 	
 	
-	public LogList checkAccountLog( Account account )
+	public ReturnObjectSet checkAccountLog( Account account )
 	{
 		ArrayList<Log> logs = new ArrayList<Log>();
-		LogList logList = new LogList();
+		ReturnObjectSet logList = new ReturnObjectSet();
 		
 		Connection connection;
 		try 
@@ -130,10 +130,10 @@ public class LogManager
 		return logList;
 	}
 	
-	public LogList checkAccountLogInTime( Account account, Date startTime, Date endTime )
+	public ReturnObjectSet checkAccountLogInTime( Account account, Date startTime, Date endTime )
 	{
 		ArrayList<Log> logs = new ArrayList<Log>();
-		LogList logList = new LogList();
+		ReturnObjectSet logList = new ReturnObjectSet();
 		
 		Connection connection;
 		try 

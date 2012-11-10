@@ -49,6 +49,47 @@ public class TbStaffOperation
 		}
 	}
 	
+	public static ArrayList<Log> selectSubordinateByDirectorID( Connection connection, String staffID )
+	{
+		ArrayList<Staff> staffs = new ArrayList();
+		
+		PreparedStatement pstmt;
+		ResultSet resultset;	
+
+		try
+		{	
+			pstmt = connection.prepareStatement ("select s2.staff_id, s2.position, s2.superior_id, s2.password from staff s1, staff s2 where (s1.superior_id=? OR s1.staff_id=? ) AND (s2.superior_id=s1.staff_id OR (s1.staff_id=? AND s2.staff_id=s1.staff_id));");
+
+			pstmt.setString(1, staffID);
+			pstmt.setString(2, staffID);
+			pstmt.setString(3, staffID);
+			
+			resultset = pstmt.executeQuery();
+
+			while ( resultset.next() )
+			{
+				Staff staff = new Staff();
+				
+				staff.setStaffID(resultset.getString("staff_id"));
+				
+				staffs.add(staff);
+			}
+			
+			connection.setAutoCommit(false);
+			pstmt.close();
+			resultset.close();
+			connection.commit();
+		}
+
+		catch (SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		
+
+		return logs;
+	}
+	
 	public static ArrayList<Staff> selectStaffsByPosition( Connection connection, Position position )
 	{
 		ArrayList<Staff> staffs = new ArrayList<Staff>();

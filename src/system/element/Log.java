@@ -27,7 +27,12 @@ public class Log
 		s += " " + staffID.toString();
 		s += " " + accountID.toString();
 		s += " " + clientID.toString();
-		s += " " + operatedAccountID.toString();
+		
+		if ( operatedAccountID == null )
+			s += " null";
+		else
+			s += " " + operatedAccountID.toString();
+	
 		s += " " + operationType.toString();
 		s += " " + Double.valueOf(operatedBalance).toString();
 		s += " " + logTime.toGMTString();

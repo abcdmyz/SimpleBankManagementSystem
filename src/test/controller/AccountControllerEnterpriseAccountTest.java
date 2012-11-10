@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 
 import system.controller.AccountController;
 import system.element.Account;
+import system.element.ReturnObjectSet;
 import system.element.Staff;
 import system.manager.AccountManager;
 import system.manager.LogManager;
@@ -332,10 +333,10 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("checkbalance", "A001 C001 123",staff);
+		ReturnObjectSet balance = accountController.executeCommand("checkbalance", "A001 C001 123",staff);
 		
 		String expectBalance = "Account Balance " + Double.valueOf(10000).toString();
-		assertEquals(expectBalance, balance);		
+		assertEquals(expectBalance, balance.getReturnMessage());		
 	}
 	
 	@Test
@@ -344,10 +345,10 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("checkbalance", "A001 OA1001 999",staff);
+		ReturnObjectSet balance = accountController.executeCommand("checkbalance", "A001 OA1001 999",staff);
 		
 		String expectBalance = "Account Balance " + Double.valueOf(10000).toString();
-		assertEquals(expectBalance, balance);		
+		assertEquals(expectBalance, balance.getReturnMessage());		
 	}
 	
 	@Test
@@ -381,7 +382,7 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 123 A002 5000",staff);
+		accountController.executeCommand("transfer", "A001 C001 123 A002 5000",staff);
 		
 		Account account1 = AccountManager.selectAccount("A001");
 		Account account2 = AccountManager.selectAccount("A002");
@@ -396,7 +397,7 @@ public class AccountControllerEnterpriseAccountTest
 		setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 OA1001 999 A002 5000",staff);
+		accountController.executeCommand("transfer", "A001 OA1001 999 A002 5000",staff);
 		
 		Account account1 = AccountManager.selectAccount("A001");
 		Account account2 = AccountManager.selectAccount("A002");
@@ -416,7 +417,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 999 A002 1000",staff);
+		accountController.executeCommand("transfer", "A001 C001 999 A002 1000",staff);
 	}
 	
 	@Test
@@ -428,7 +429,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 OA1001 123 A002 1000",staff);
+		accountController.executeCommand("transfer", "A001 OA1001 123 A002 1000",staff);
 	}
 	
 	
@@ -441,7 +442,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C999 123 A002 1000",staff);
+		accountController.executeCommand("transfer", "A001 C999 123 A002 1000",staff);
 	}
 	
 	
@@ -455,7 +456,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 123 A999 300",staff);
+		accountController.executeCommand("transfer", "A001 C001 123 A999 300",staff);
 	}
 	
 	
@@ -468,7 +469,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 123 A001 -300",staff);
+		accountController.executeCommand("transfer", "A001 C001 123 A001 -300",staff);
 	}
 	
 	@Test
@@ -480,7 +481,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 123 A002 300000",staff);
+		accountController.executeCommand("transfer", "A001 C001 123 A002 300000",staff);
 	}
 	
 	@Test
@@ -492,7 +493,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 123 A009 300",staff);
+		accountController.executeCommand("transfer", "A001 C001 123 A009 300",staff);
 	}
 	
 
@@ -505,7 +506,7 @@ public class AccountControllerEnterpriseAccountTest
 	    setUpAccountAndOperator();
 		
 		AccountController accountController =  new AccountController();	
-		String balance = accountController.executeCommand("transfer", "A001 C001 123 A010 300",staff);
+		accountController.executeCommand("transfer", "A001 C001 123 A010 300",staff);
 	}
 	
 	
@@ -518,10 +519,10 @@ public class AccountControllerEnterpriseAccountTest
 		AccountController accountController =  new AccountController();	
 		accountController.executeCommand("chpasswd", "A001 C001 123 999",staff);
 		
-		String balance = accountController.executeCommand("checkbalance", "A001 C001 999",staff);
+		ReturnObjectSet balance = accountController.executeCommand("checkbalance", "A001 C001 999",staff);
 		
 		String expectBalance = "Account Balance " + Double.valueOf(10000).toString();
-		assertEquals(expectBalance, balance);	
+		assertEquals(expectBalance, balance.getReturnMessage());	
 	}
 	
 	@Test
@@ -532,10 +533,10 @@ public class AccountControllerEnterpriseAccountTest
 		AccountController accountController =  new AccountController();	
 		accountController.executeCommand("chpasswd", "A001 OA1001 999 123",staff);
 		
-		String balance = accountController.executeCommand("checkbalance", "A001 OA1001 123",staff);
+		ReturnObjectSet balance = accountController.executeCommand("checkbalance", "A001 OA1001 123",staff);
 		
 		String expectBalance = "Account Balance " + Double.valueOf(10000).toString();
-		assertEquals(expectBalance, balance);	
+		assertEquals(expectBalance, balance.getReturnMessage());	
 	}
 	
 	@Test
@@ -559,9 +560,9 @@ public class AccountControllerEnterpriseAccountTest
 		AccountController accountController =  new AccountController();	
 		accountController.executeCommand("addoperator", "A001 C001 123 OA1001 999",staff);
 		
-		String balance = accountController.executeCommand("checkbalance", "A001 OA1001 999",staff);
+		ReturnObjectSet balance = accountController.executeCommand("checkbalance", "A001 OA1001 999",staff);
 		String expectBalance = "Account Balance " + Double.valueOf(10000).toString();
-		assertEquals(expectBalance, balance);	
+		assertEquals(expectBalance, balance.getReturnMessage());	
 	}
 	
 	@Test

@@ -19,6 +19,7 @@ import enumtype.OperationType;
 
 public class TbLogTest 
 {
+	/*
 	public static void insertLogTest() throws ClassNotFoundException, SQLException, ParseException
 	{
 		Connection connection;
@@ -277,5 +278,6 @@ public class TbLogTest
 		System.out.println();
 		
 	}
+	*/
 
 }
