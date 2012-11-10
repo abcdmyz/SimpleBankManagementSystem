@@ -49,7 +49,7 @@ public class TbStaffOperation
 		}
 	}
 	
-	public static ArrayList<Log> selectSubordinateByDirectorID( Connection connection, String staffID )
+	public static ArrayList<Staff> selectSubordinateByDirectorID( Connection connection, String staffID )
 	{
 		ArrayList<Staff> staffs = new ArrayList();
 		
@@ -87,7 +87,47 @@ public class TbStaffOperation
 		}
 		
 
-		return logs;
+		return staffs;
+	}
+	
+	public static ArrayList<Staff> selectSubordinateByManager( Connection connection, String staffID )
+	{
+		ArrayList<Staff> staffs = new ArrayList();
+		
+		PreparedStatement pstmt;
+		ResultSet resultset;	
+
+		try
+		{	
+			pstmt = connection.prepareStatement ("select * from staff WHERE superior_id=? OR staff_id=? ");
+
+			pstmt.setString(1, staffID);
+			pstmt.setString(2, staffID);
+			
+			resultset = pstmt.executeQuery();
+
+			while ( resultset.next() )
+			{
+				Staff staff = new Staff();
+				
+				staff.setStaffID(resultset.getString("staff_id"));
+				
+				staffs.add(staff);
+			}
+			
+			connection.setAutoCommit(false);
+			pstmt.close();
+			resultset.close();
+			connection.commit();
+		}
+
+		catch (SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		
+
+		return staffs;
 	}
 	
 	public static ArrayList<Staff> selectStaffsByPosition( Connection connection, Position position )

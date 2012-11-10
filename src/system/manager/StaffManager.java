@@ -244,4 +244,58 @@ public class StaffManager
 		
 		return staffs;
 	}
+	
+	public boolean checkManagerSubordinate( String managerID, String staffID )
+	{
+		ArrayList<Staff> staffs = new ArrayList<Staff>();
+		
+		Connection connection;
+		try 
+		{
+			connection = JDBCConnection.getCommonConnection();
+			staffs = TbStaffOperation.selectSubordinateByManager(connection, managerID);
+			
+			for ( Staff staff : staffs )
+			{
+				//System.out.println(staff.getStaffID());
+				if ( staff.getStaffID().equals(staffID) )
+					return true;
+			}
+		} 
+		catch (ClassNotFoundException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return false;
+	}
+	
+	public boolean checkDirectorSubordinate( String directorID, String staffID )
+	{
+		ArrayList<Staff> staffs = new ArrayList<Staff>();
+		
+		Connection connection;
+		try 
+		{
+			connection = JDBCConnection.getCommonConnection();
+			staffs = TbStaffOperation.selectSubordinateByDirectorID(connection, directorID);
+			
+			for ( Staff staff : staffs )
+			{
+				//System.out.println(staff.getStaffID());
+				if ( staff.getStaffID().equals(staffID) )
+					return true;
+			}
+		} 
+		catch (ClassNotFoundException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return false;
+	}
 }
