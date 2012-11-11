@@ -4,8 +4,12 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 import exception.dboperation.AccountDBOperationException;
+import exception.dboperation.StaffDBOperationException;
 
 import system.manager.AccountManager;
+import system.manager.LogManager;
+import system.manager.StaffManager;
+import system.ui.LogInMenu;
 import test.controller.AccountControllerOrdinaryAccountTest;
 import test.dboperation.TbAccountTest;
 import test.dboperation.TbLogTest;
@@ -58,5 +62,31 @@ public class Main
 		//AccountEnterpriseManagerTest.transferAccountTest();
 		
 		//AccountControllerTest.createAccountTest();
+		/*
+		AccountManager.deleteAllAccountForTest();
+		AccountManager.deleteAllClientForTest();
+		AccountManager.initial();
+		
+		StaffManager.deleteAllStaffForTest();
+		StaffManager.addAdminStaffForTest();
+		try {
+			StaffManager.initial();
+		} catch (StaffDBOperationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		LogManager.deleteAllLogForTest();
+		try {
+			LogManager.initial();
+		} catch (StaffDBOperationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		LogInMenu logInMenu = new LogInMenu();
+		logInMenu.OperatorLogInPage();
+		
+		
 	}
 }

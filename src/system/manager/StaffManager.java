@@ -13,6 +13,7 @@ import enumtype.Position;
 import exception.dboperation.AccountDBOperationException;
 import exception.dboperation.StaffDBOperationException;
 import exception.elmanager.StaffManagerException;
+import system.element.ReturnObjectSet;
 import system.element.Staff;
 
 public class StaffManager 
@@ -130,10 +131,10 @@ public class StaffManager
 			
 	}
 	
-	public void newStaff( Staff upStaff, Staff lowStaff ) throws StaffDBOperationException, StaffManagerException
+	public Staff newStaff( Staff upStaff, Staff lowStaff ) throws StaffDBOperationException, StaffManagerException
 	{
 		Staff supStaff = new Staff();
-		
+		String newStaffID = new String();
 		try 
 		{
 			Connection connection = JDBCConnection.getCommonConnection();
@@ -148,7 +149,9 @@ public class StaffManager
 				throw new StaffManagerException("Operator Staff Can't New Other Staff");
 			}
 			
-			lowStaff.setStaffID(staffIDGenerator());
+			
+			newStaffID = staffIDGenerator();
+			lowStaff.setStaffID(newStaffID);
 			lowStaff.setSuperiorID(supStaff.getStaffID());
 			
 			if ( supStaff.getPosition().equals(Position.manager) )
@@ -165,6 +168,8 @@ public class StaffManager
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
+		
+		return lowStaff;
 	}
 	
 	public Staff selectStaffByID( String staffID ) throws StaffDBOperationException
@@ -222,6 +227,7 @@ public class StaffManager
 	{
 		Staff supStaff = new Staff();
 		ArrayList<Staff> staffs = new ArrayList<Staff>();
+		ReturnObjectSet ROS = new ReturnObjectSet();
 		staffs.clear();
 		
 		try 
@@ -234,13 +240,25 @@ public class StaffManager
 				throw new StaffManagerException("Staff " + staff.getStaffID() + " Password Not Match");
 			}
 			
-			staffs = TbStaffOperation.selectStaffsBySuperiorID(connection, staff.getStaffID());
+			if ( supStaff.getPosition().equals(Position.operator))
+			{
+				throw new StaffManagerException("Operator Has No Subordinate");
+			}
+			
+			if ( supStaff.getPosition().equals(Position.manager) )
+				staffs = TbStaffOperation.selectSubordinateByManager(connection, staff.getStaffID());
+			else if ( supStaff.getPosition().equals(Position.director) )
+				staffs = TbStaffOperation.selectSubordinateByDirectorID(connection, staff.getStaffID());
+			else if ( supStaff.getPosition().equals(Position.admin) )
+				staffs = TbStaffOperation.selectAllStaffs(connection);
 		} 
 		catch (ClassNotFoundException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		ROS.setStaffList(staffs);
 		
 		return staffs;
 	}

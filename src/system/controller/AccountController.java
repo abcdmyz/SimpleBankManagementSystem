@@ -35,6 +35,9 @@ public class AccountController
 		String accountID = parameters[0];
 		double balance;
 		
+		//System.out.println(parameter);
+		
+		
 			if ( operation.equals("create") )
 			{
 				accountID = executeCreateAccount(account, parameters);
@@ -46,13 +49,22 @@ public class AccountController
 				account = AccountManager.selectAccount(accountID);
 			
 				if ( operation.equals("deposit") )
+				{
 					executeDepositAccount(account, parameters);
+					returnObject.setReturnMessage("Account " +  accountID + " Deposit Successfully");
+				}
 				
 				else if ( operation.equals("withdraw") )
+				{
 					executeWithdrawAccount(account, parameters);
+					returnObject.setReturnMessage("Account " +  accountID + " Withdraw Successfully");
+				}
 				
 				else if ( operation.equals("chpasswd") )
+				{
 					executeChangePassword(account, parameters);
+					returnObject.setReturnMessage("Account " +  accountID + " Change Password Successfully");
+				}
 				
 				else if ( operation.equals("checkbalance") )
 				{
@@ -60,10 +72,17 @@ public class AccountController
 					returnObject.setReturnMessage("Account Balance " + Double.valueOf(balance).toString());
 				}
 				else if ( operation.equals("transfer") )
+				{
 					executeTransferAccount(account, parameters);
+					returnObject.setReturnMessage("Account " +  accountID + " Transfer Successfully");
+				}
 				
 				else if ( operation.equals("addoperator") )
+				{
+					System.out.println(parameter);
 					executeAddOperator(account, parameters);
+					returnObject.setReturnMessage("Account " +  accountID + " Add Operator Successfully");
+				}
 				
 				else if ( operation.equals("checklog") )
 					returnObject = executeCheckLog(account, parameters);
@@ -239,8 +258,12 @@ public class AccountController
 		
 		account.setBalance(Double.valueOf(parameters[4]).doubleValue());
 	
-		SimpleDateFormat simFormat = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss");
-		Date openDate = simFormat.parse(parameters[5]);
+		Date openDate = new Date();
+		if ( parameters.length >= 6 )
+		{
+			SimpleDateFormat simFormat = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss");
+			openDate = simFormat.parse(parameters[5]);
+		}
 		account.setOpenDate(openDate);
 		
 		AccountManagerFactory accountManagerFactory = new AccountManagerFactory();

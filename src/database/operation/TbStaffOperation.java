@@ -71,6 +71,12 @@ public class TbStaffOperation
 				Staff staff = new Staff();
 				
 				staff.setStaffID(resultset.getString("staff_id"));
+				staff.setPassword(resultset.getString("password"));
+				staff.setSuperiorID(resultset.getString("superior_id"));
+				
+				String type;
+				type = resultset.getString("position");
+				staff.setPosition(Position.getEnumFromString(type));
 				
 				staffs.add(staff);
 			}
@@ -111,7 +117,12 @@ public class TbStaffOperation
 				Staff staff = new Staff();
 				
 				staff.setStaffID(resultset.getString("staff_id"));
+				staff.setPassword(resultset.getString("password"));
+				staff.setSuperiorID(resultset.getString("superior_id"));
 				
+				String type;
+				type = resultset.getString("position");
+				staff.setPosition(Position.getEnumFromString(type));
 				staffs.add(staff);
 			}
 			
@@ -274,6 +285,49 @@ public class TbStaffOperation
 		
 		
 		return staff;
+	}
+	
+	public static ArrayList<Staff> selectAllStaffs( Connection connection ) throws StaffDBOperationException
+	{
+		PreparedStatement pstmt;
+		ResultSet resultset; 	
+		ArrayList<Staff> staffs = new ArrayList<Staff>();
+		staffs.clear();
+
+		try
+		{	
+			pstmt = connection.prepareStatement ("SELECT * FROM staff;");
+			
+			connection.setAutoCommit(false);
+			resultset = pstmt.executeQuery();
+			
+			while ( resultset.next() )
+			{
+				Staff staff = new Staff();
+				
+				staff.setStaffID(resultset.getString("staff_id"));
+				staff.setPassword(resultset.getString("password"));
+				staff.setSuperiorID(resultset.getString("superior_id"));
+				
+				String type;
+				type = resultset.getString("position");
+				staff.setPosition(Position.getEnumFromString(type));
+				
+				staffs.add(staff);
+			}
+			
+			
+			pstmt.close();
+			resultset.close();
+			connection.commit();
+		}
+
+		catch (SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		
+		return staffs;
 	}
 	
 	public static void updateStaffPassword( Connection connection, String staffID, String newPassword )
