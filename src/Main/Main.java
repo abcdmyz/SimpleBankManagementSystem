@@ -6,10 +6,11 @@ import java.text.ParseException;
 import exception.dboperation.AccountDBOperationException;
 import exception.dboperation.StaffDBOperationException;
 
+import system.cmdui.LogInMenu;
+import system.gui.MainPanelManager;
 import system.manager.AccountManager;
 import system.manager.LogManager;
 import system.manager.StaffManager;
-import system.ui.LogInMenu;
 import test.controller.AccountControllerOrdinaryAccountTest;
 import test.dboperation.TbAccountTest;
 import test.dboperation.TbLogTest;
@@ -84,9 +85,31 @@ public class Main
 			e.printStackTrace();
 		}
 		*/
-		LogInMenu logInMenu = new LogInMenu();
-		logInMenu.OperatorLogInPage();
+	
 		
+		try 
+		{
+			AccountManager.initial();
+			//AccountManager.deleteAllAccountForTest();
+			//AccountManager.deleteAllClientForTest();
+			
+			StaffManager.initial();
+			//StaffManager.deleteAllStaffForTest();
+			//StaffManager.addAdminStaffForTest();
+			
+			LogManager.initial();
+			//LogManager.deleteAllLogForTest();
+		} 
+		catch (StaffDBOperationException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		MainPanelManager mainPaelManager = new MainPanelManager();
+		mainPaelManager.LoginMenuGUI();
+				
+		//LogInMenu logInMenu = new LogInMenu();
+		//logInMenu.OperatorLogInPage();
 	}
 }

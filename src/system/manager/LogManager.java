@@ -20,10 +20,7 @@ public class LogManager
 	
 	public static void initial() throws ClassNotFoundException, StaffDBOperationException
 	{
-		deleteAllLogForTest();
 		logIDNumForTest = 0;
-		
-		Connection connection = JDBCConnection.getCommonConnection();
 	}
 	
 	protected String staffIDGenerator()

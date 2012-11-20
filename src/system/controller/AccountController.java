@@ -79,7 +79,7 @@ public class AccountController
 				
 				else if ( operation.equals("addoperator") )
 				{
-					System.out.println(parameter);
+					//System.out.println(parameter);
 					executeAddOperator(account, parameters);
 					returnObject.setReturnMessage("Account " +  accountID + " Add Operator Successfully");
 				}
