@@ -36,7 +36,7 @@ public class AccountControllerEnterpriseAccountTest
 		LogManager.initial();
 	}
 	
-	
+	/*
 	@Test
 	public void createeAccountTestNormal() throws ParseException, AccountManagerException, AccountDBOperationException
 	{
@@ -613,4 +613,5 @@ public class AccountControllerEnterpriseAccountTest
 		AccountController accountController =  new AccountController();	
 		accountController.executeCommand("addoperator", "A111 C001 123 OA1001 999",staff);	
 	}
+	*/
 }

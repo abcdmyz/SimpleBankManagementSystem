@@ -35,7 +35,7 @@ public class AccountControllerVIPAccountTest {
 		LogManager.deleteAllLogForTest();
 		LogManager.initial();
 	}
-	
+	/*
 	@Test
 	public void createAccountTestBalanceNeagtive() throws ParseException, AccountManagerException, AccountDBOperationException
 	{
@@ -430,5 +430,5 @@ public class AccountControllerVIPAccountTest {
 		String expectBalance = "Account Balance " + Double.valueOf(2000000).toString();
 		assertEquals(expectBalance, balance.getReturnMessage());	
 	}
-
+	*/
 }

@@ -138,7 +138,7 @@ public class AccountVIPManager extends AccountManager
 		try 
 		{
 			connection = JDBCConnection.getCommonConnection();
-			TbAccountOperation.updateAccountPassword(connection, client.getPassword(), newPassword);
+			TbAccountOperation.updateAccountPassword(connection, account.getAccountID(), newPassword);
 			connection.close();		
 		} 
 		catch (ClassNotFoundException e) 

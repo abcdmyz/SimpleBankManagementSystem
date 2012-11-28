@@ -23,7 +23,7 @@ public class AccountController
 {
 	private Staff staff;
 	
-	public ReturnObjectSet executeCommand( String operation, String parameter, Staff currentStaff ) throws ParseException, AccountManagerException, AccountDBOperationException
+	public ReturnObjectSet executeCommand( String operation, String parameter, String type, Staff currentStaff ) throws ParseException, AccountManagerException, AccountDBOperationException
 	{
 		Account account = null;
 		AccountManager accountManager = null;
@@ -47,6 +47,15 @@ public class AccountController
 			else
 			{
 				account = AccountManager.selectAccount(accountID);
+				
+				if ( account.getClientType().equals(ClientType.enterprise) && type.equals("individual") )
+				{
+					throw new AccountManagerException("This is Not Individual Account");
+				}
+				if ( !account.getClientType().equals(ClientType.enterprise) && type.equals("enterprise") )
+				{
+					throw new AccountManagerException("This is Not Enterprise Account");
+				}
 			
 				if ( operation.equals("deposit") )
 				{
@@ -472,7 +481,7 @@ public class AccountController
 				}
 			}
 		}
-		
+
 		accountManager.changePassword(account, client, newPassword);
 		
 		/*

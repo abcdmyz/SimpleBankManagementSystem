@@ -7,7 +7,7 @@ import exception.dboperation.AccountDBOperationException;
 import exception.dboperation.StaffDBOperationException;
 
 import system.cmdui.LogInMenu;
-import system.gui.MainPanelManager;
+import system.gui.mainmenu.MainPanelManager;
 import system.manager.AccountManager;
 import system.manager.LogManager;
 import system.manager.StaffManager;

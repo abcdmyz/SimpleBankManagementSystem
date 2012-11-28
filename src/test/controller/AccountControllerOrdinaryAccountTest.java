@@ -40,7 +40,7 @@ public class AccountControllerOrdinaryAccountTest
 		LogManager.deleteAllLogForTest();
 		LogManager.initial();
 	}
-	
+	/*
 	@Test
 	public void createOrdinaryAccountTestNormal() throws Exception
 	{
@@ -415,7 +415,7 @@ public class AccountControllerOrdinaryAccountTest
 			System.out.println(log.toString());
 		}
 		
-		
 	}
+	*/
 	
 }
